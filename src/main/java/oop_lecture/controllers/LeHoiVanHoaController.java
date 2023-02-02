@@ -31,27 +31,27 @@ public class LeHoiVanHoaController extends InfoScreenController {
         Label subLabel1 = new Label("Cấp Độ");
         subLabel1.setPadding(new Insets(1,1,1,1));
         // content
-        Text tmpText = new Text(base.getCapDo());
-        TextFlow tmpTextFlow = new TextFlow(tmpText);
-        vbContent.getChildren().addAll(subLabel1, tmpTextFlow);
-
-        Label subLabel2 = new Label("Di sản Quốc Gia");
-        subLabel2.setPadding(new Insets(1,1,1,1));
-        if (base.isLaDiSanQuocGia()) vbContent.getChildren().addAll(subLabel2);
-
-        Label subLabel3 = new Label("Địa Điểm");
-        subLabel3.setPadding(new Insets(1,1,1,1));
-        // content
-        tmpText = new Text(base.getNoiDienRa() == null ? "Hiện chưa rõ nơi diễn ra" : base.getNoiDienRa().toString());
-        tmpTextFlow = new TextFlow(tmpText);
-        vbContent.getChildren().addAll(subLabel3, tmpTextFlow);
+//        Text tmpText = new Text(base.getCapDo());
+//        TextFlow tmpTextFlow = new TextFlow(tmpText);
+//        vbContent.getChildren().addAll(subLabel1, tmpTextFlow);
+//
+//        Label subLabel2 = new Label("Di sản Quốc Gia");
+//        subLabel2.setPadding(new Insets(1,1,1,1));
+//        if (base.isLaDiSanQuocGia()) vbContent.getChildren().addAll(subLabel2);
+//
+//        Label subLabel3 = new Label("Địa Điểm");
+//        subLabel3.setPadding(new Insets(1,1,1,1));
+//        // content
+//        tmpText = new Text(base.getNoiDienRa() == null ? "Hiện chưa rõ nơi diễn ra" : base.getNoiDienRa().toString());
+//        tmpTextFlow = new TextFlow(tmpText);
+//        vbContent.getChildren().addAll(subLabel3, tmpTextFlow);
 
         Label subLabel4 = new Label("Thời Điểm Tổ Chức");
         subLabel4.setPadding(new Insets(1,1,1,1));
         // content
-        tmpText = new Text(base.getThoiDiemToChuc() == null ? "Hiện không rõ thời điểm tổ chức" : base.getThoiDiemToChuc().toString());
-        tmpTextFlow = new TextFlow(tmpText);
-        vbContent.getChildren().addAll(subLabel4, tmpTextFlow);
+//        tmpText = new Text(base.getThoiDiemToChuc() == null ? "Hiện không rõ thời điểm tổ chức" : base.getThoiDiemToChuc().toString());
+//        tmpTextFlow = new TextFlow(tmpText);
+//        vbContent.getChildren().addAll(subLabel4, tmpTextFlow);
 
 //        Label subLabel5 = new Label("Sự Kiện Lịch Sử ");
 //        subLabel5.setPadding(new Insets(1,1,1,1));
@@ -61,9 +61,9 @@ public class LeHoiVanHoaController extends InfoScreenController {
         Label subLabel6 = new Label("Lần Đầu Tổ Chức");
         subLabel6.setPadding(new Insets(1,1,1,1));
         // content
-        tmpText = new Text(base.getLanDauToChuc());
-        tmpTextFlow = new TextFlow(tmpText);
-        vbContent.getChildren().addAll(subLabel6, tmpTextFlow);
+//        tmpText = new Text(base.getLanDauToChuc());
+//        tmpTextFlow = new TextFlow(tmpText);
+//        vbContent.getChildren().addAll(subLabel6, tmpTextFlow);
 
         TableView<NhanVatLichSu> tvNVLQ = new TableView<>(FXCollections.observableList(base.getNhanVatLienQuan()));
         // index column

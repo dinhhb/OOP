@@ -1,23 +1,31 @@
 package oop_lecture.get_data;
 
+import java.io.File;
+import java.io.IOException;
+import oop_lecture.utility.Json;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import oop_lecture.models.DiaDiem;
 import oop_lecture.models.LeHoiVanHoa;
-import oop_lecture.models.NhanVatLichSu;
+import oop_lecture.utility.SortedSetByName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import static oop_lecture.utility.Json.toFile;
+
 public class CaoDuLieuLeHoiVanHoa {
 
-	public static void main(String[] args) throws InterruptedException {
-		List<LeHoiVanHoa> listleHoi = new ArrayList<>();
+	public static void main(String[] args) throws InterruptedException, IOException {
+		SortedSetByName<LeHoiVanHoa> listLeHoi = new SortedSetByName<>();
 		
 		System.setProperty("webdriver.chrome.driver", "/Users/buudinhha/Downloads/chromedriver");
 		
@@ -31,7 +39,7 @@ public class CaoDuLieuLeHoiVanHoa {
         driver.get("https://vi.wikipedia.org/wiki/L%E1%BB%85_h%E1%BB%99i_Vi%E1%BB%87t_Nam");
         Thread.sleep(2000);
 
-        List<WebElement> e1 = driver.findElements(By.xpath("/html/body/div[1]/div/div[3]/main/div[2]/div[3]/div[1]/table[2]/tbody/tr"));
+        List<WebElement> e1 = driver.findElements(By.xpath("/html/body/div[1]/div/div[3]/main/div[3]/div[3]/div[1]/table[2]/tbody/tr"));
         
         // Dem so hang
         int soHang = e1.size();
@@ -46,9 +54,9 @@ public class CaoDuLieuLeHoiVanHoa {
             String firstHeld = null;
             Date date = null;
             List<String> tenNhanVatLienQuan = new ArrayList<>();
-        	
+
             // Lay ten le hoi
-            String xpathString = "/html/body/div[1]/div/div[3]/main/div[2]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[3]";
+            String xpathString = "/html/body/div[1]/div/div[3]/main/div[3]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[3]";
            	try {
             	WebElement e2 = driver.findElement(By.xpath(xpathString));
             	name = e2.getText();
@@ -57,7 +65,7 @@ public class CaoDuLieuLeHoiVanHoa {
 			}
             	
            	// Lay dia diem
-            String xpathString2 = "/html/body/div[1]/div/div[3]/main/div[2]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[2]";
+            String xpathString2 = "/html/body/div[1]/div/div[3]/main/div[3]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[2]";
             try {
                 WebElement e2 = driver.findElement(By.xpath(xpathString2));
                 placeString = e2.getText();
@@ -66,8 +74,7 @@ public class CaoDuLieuLeHoiVanHoa {
 					place = null;
 				}
                 else {
-					place = new DiaDiem();
-					place.ten = placeString;
+					place = new DiaDiem(placeString);
 				}
                 
             } catch (Exception e) {
@@ -75,7 +82,7 @@ public class CaoDuLieuLeHoiVanHoa {
     		}
             	
             // Lay lan dau to chuc
-            String xpathString3 = "/html/body/div[1]/div/div[3]/main/div[2]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[4]";
+            String xpathString3 = "/html/body/div[1]/div/div[3]/main/div[3]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[4]";
             try {
                	WebElement e2 = driver.findElement(By.xpath(xpathString3));
                 firstHeld = e2.getText();
@@ -88,7 +95,7 @@ public class CaoDuLieuLeHoiVanHoa {
     		}
             	
             // Lay ngay to chuc
-            String xpathString4 = "/html/body/div[1]/div/div[3]/main/div[2]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[1]";
+            String xpathString4 = "/html/body/div[1]/div/div[3]/main/div[3]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[1]";
             try {
                	WebElement e2 = driver.findElement(By.xpath(xpathString4));
                	String dateString = e2.getText();
@@ -104,7 +111,7 @@ public class CaoDuLieuLeHoiVanHoa {
             	
             // Lay ten nhan vat lien quan 
             // Thuc hien tach xau va cho vao list tenNhanVatLienQuan
-            String xpathString5 = "/html/body/div[1]/div/div[3]/main/div[2]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[5]";
+            String xpathString5 = "/html/body/div[1]/div/div[3]/main/div[3]/div[3]/div[1]/table[2]/tbody/tr["+(i+1)+"]/td[5]";
             try {
                	WebElement e2 = driver.findElement(By.xpath(xpathString5));
                	String namePerson = e2.getText();
@@ -121,27 +128,41 @@ public class CaoDuLieuLeHoiVanHoa {
     				break;
     		}
             
-            // Khoi tao leHoi va cho vao listleHoi
+            // Khoi tao leHoi va cho vao listLeHoi
             LeHoiVanHoa leHoi = new LeHoiVanHoa(name, place, date, firstHeld, tenNhanVatLienQuan);
-            listleHoi.add(leHoi);
+            listLeHoi.add(leHoi);
         }
         
         driver.quit();
         
         // in thong tin da lay duoc trong listLeHoi
     	int i = 0;
-        for (LeHoiVanHoa e : listleHoi) {
+        for (LeHoiVanHoa e : listLeHoi) {
         	System.out.println(i + 1);
         	System.out.println(e.getTen());
         	System.out.println(e.getNoiDienRa());
         	System.out.println(e.getThoiDiemToChuc());
         	System.out.println(e.getLanDauToChuc());
-        	for (NhanVatLichSu eString : e.getNhanVatLienQuan()) {
-        		System.out.println(eString.getTen());
-        	}
+//        	for (String eString : e.getTenNhanVatLienQuan()) {
+//        		System.out.println(eString);
+//        	}
         	System.out.println("\n");
         	i++;
         }
+
+//		ObjectMapper mapper = new ObjectMapper();
+//		mapper.findAndRegisterModules();
+		//Object to JSON in file
+		Json.toFile(new File("src\\maindata\\Sample.json"), Json.toJSon(listLeHoi));
+//		try {
+//			mapper.writeValue(new File("data\\LeHoiVanHoa.json"), listLeHoi);
+//		} catch (JsonMappingException e) {
+//			e.printStackTrace();
+//		} catch (JsonGenerationException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
     }
 
 }

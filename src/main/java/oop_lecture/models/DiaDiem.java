@@ -13,4 +13,9 @@ public class DiaDiem {
 
         return output.toString();
     }
+
+    public DiaDiem(String ten) {
+        super();
+        this.ten = ten;
+    }
 }

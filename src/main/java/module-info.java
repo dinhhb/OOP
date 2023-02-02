@@ -2,7 +2,8 @@ module oop_lecture {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.fasterxml.jackson.databind;
-
+    requires selenium.api;
+    requires selenium.chrome.driver;
 
 
     exports oop_lecture.application;
@@ -11,8 +12,8 @@ module oop_lecture {
     exports oop_lecture.controllers;
     opens oop_lecture.controllers;
 
-    exports oop_lecture.models;
-    opens oop_lecture.models;
+//    exports oop_lecture.models;
+//    opens oop_lecture.models;
 
     exports oop_lecture.utility;
     opens oop_lecture.utility;

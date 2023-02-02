@@ -19,9 +19,9 @@ public abstract class LichSuCoTen implements Comparable<LichSuCoTen> {
 
 
     /**
-     * kiểm tra object này có tên chứa chuỗi ký tự 
+     * kiểm tra object này có tên chứa chuỗi ký tự
      * @param subString : chuỗi con
-     * @return true : tên object này có chứa chuỗi con 
+     * @return true : tên object này có chứa chuỗi con
      */
     public boolean like(String subString) {
         if(getTen() == null || subString == null || subString.trim().isEmpty()) return false;
